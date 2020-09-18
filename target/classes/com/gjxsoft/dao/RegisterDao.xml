@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.gjxsoft.dao.RegisterDao">
+    <insert id="insertRegister" parameterType="register">
+        insert into register(ID,CaseNumber,RealName,Gender,IDnumber,BirthDate,Age,AgeType,HomeAddress,VisitDate,Noon,DeptID
+        ,UserID,RegistLeID,SettleID,IsBook,RegistTime,RegisterID,VisitState)
+        values(null,#{caseNumber},#{realName},#{gender},#{iDnumber},#{ birthDate},#{age},#{ageType},#{homeAddress}
+        ,#{visitDate},#{noon},#{deptId},#{ userId},#{registLeId},#{settleId},#{isBook},#{registTime},#{registerId},#{visitState})
+    </insert>
+
+
+    <select id="getCaseNumber" resultType="int">
+        SELECT MAX(CaseNumber) FROM register
+    </select>
+
+
+
+</mapper>

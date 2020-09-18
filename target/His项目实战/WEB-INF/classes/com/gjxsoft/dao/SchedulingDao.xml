@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjxsoft.dao.SchedulingDao">
+    <resultMap id="SchedulingMap" type="com.gjxsoft.domain.Scheduling">
+        <id property="id" column="id"></id>
+        <result property="schedDate" column="scheddate"></result>
+        <result property="deptId" column="deptid"></result>
+        <result property="userId" column="userid"></result>
+        <result property="noon" column="noon"></result>
+        <result property="ruleId" column="ruleid"></result>
+        <result property="delMark" column="delmark"></result>
+        <association property="user" column="userid" javaType="user">
+             <id column="ID" property="id"></id>
+            <result column="RealName" property="realName"></result>
+            <result column="RegistLeId" property="registLeId"></result>
+        </association>
+        <association property="department" column="deptid" javaType="Department">
+            <id column="ID" property="id"></id>
+            <result column="DeptName" property="deptName"></result>
+        </association>
+    </resultMap>
+    <select id="findAll"  resultType="com.gjxsoft.domain.Scheduling">
+        select  * from scheduling where scheduling.DelMark =1
+    </select>
+
+    <select id="findScheduling" resultMap="SchedulingMap">
+        select   s.*,u.ID,u.RealName,u.RegistLeID,d.id,d.DeptName from scheduling s,user u,department d where u.DelMark =1 and s.DelMark =1 and s.UserID =u.ID and d.ID =s.DeptID and u.DeptID =d.ID
+    </select>
+
+
+
+
+    <insert id="insertScheduling" parameterType="com.gjxsoft.domain.Scheduling">
+        insert   INTO  scheduling( scheddate, deptid, userid, noon, ruleid)
+        values(#{schedDate},#{deptId},#{userId},#{noon},#{ruleId})
+
+    </insert>
+
+    <delete id="deleteByID" parameterType="int">
+        delete  from scheduling where UserID =#{id};
+
+    </delete>
+</mapper>

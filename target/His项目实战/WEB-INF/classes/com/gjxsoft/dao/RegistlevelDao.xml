@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.gjxsoft.dao.RegistlevelDao">
+
+    <select id="findRegistlevelByid" resultType="com.gjxsoft.domain.Registlevel">
+        select * from registlevel where id=#{id};
+    </select>
+
+
+    <select id="findAll" resultType="com.gjxsoft.domain.Registlevel">
+        select * from registlevel where DelMark =1 order by SequenceNo
+    </select>
+
+    <update id="updateRegistLevel" parameterType="com.gjxsoft.domain.Registlevel">
+         update registlevel
+         set  RegistCode = #{registCode},RegistName =#{registName} ,RegistFee=#{registFee},RegistQuota =#{registQuota}
+         where ID =#{id}
+
+    </update>
+
+    <insert id="insertRegistlevel" parameterType="com.gjxsoft.domain.Registlevel">
+        insert into registlevel(RegistName,RegistCode,RegistFee,RegistQuota,SequenceNo) values (#{registName},#{registCode},#{registFee},#{registQuota},#{sequenceNo})
+    </insert>
+
+    <update id="deleteRegistLevel" parameterType="int">
+         update registlevel set DelMark = 2 where ID =#{id}
+    </update>
+
+    <select id="findByIdOrName" parameterType="String" resultType="com.gjxsoft.domain.Registlevel">
+        select * from registlevel where (ID like #{idOrName} or RegistName like '%${value}%') and DelMark =1
+    </select>
+
+</mapper>

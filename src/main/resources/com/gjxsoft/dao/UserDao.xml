@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjxsoft.dao.UserDao">
+    <select id="LoginByUserNameandPass" parameterType="user" resultType="user">
+        select  * from user where UserName = #{userName} and Password =#{password}
+    </select>
+
+    <select id="findUserByDepartID" parameterType="Integer" resultType="user">
+        select * from user where DeptID =#{depart} and UseType =3
+    </select>
+
+    <select id="findAll" parameterType="Integer" resultType="user">
+        select * from user where DelMark =1
+    </select>
+
+    <update id="updateUserRID" parameterType="int">
+        update user set RegistLeID = #{resgistId} where ID =#{userID}
+    </update>
+
+</mapper>

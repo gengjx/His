@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjxsoft.dao.RuleDao">
+    <resultMap id="RuleMap" type="com.gjxsoft.domain.Rule">
+
+        <id property="id" column="id"></id>
+        <result property="schedDate" column="scheddate"></result>
+        <result property="ruleName" column="rulename"></result>
+        <result property="deptId" column="deptid"></result>
+        <result property="userId" column="userid"></result>
+        <result property="week" column="week"></result>
+        <result property="delMark" column="delmark"></result>
+        <association property="user" column="userid" javaType="user">
+            <id column="ID" property="id"></id>
+            <result column="RealName" property="realName"></result>
+        </association>
+        <association property="department" column="deptid" javaType="Department">
+            <id column="ID" property="id"></id>
+            <result column="DeptName" property="deptName"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAll"  resultType="com.gjxsoft.domain.Rule">
+        select  * from rule
+    </select>
+
+    <insert id="insertRule" parameterType="com.gjxsoft.domain.Rule">
+        insert into rule(id, rulename, deptid, userid, week, delmark) values (null,#{ruleName},#{deptId},#{userId},#{week},1)
+    </insert>
+
+    <select id="selectRuleAndUser" resultMap="RuleMap">
+        select  r.*,d.ID,d.DeptName,u.ID,u.RealName from rule r,department d,user u
+        where r.DeptID =d.ID and r.UserID = u.ID and r.DelMark =1
+    </select>
+</mapper>

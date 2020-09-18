@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.gjxsoft.dao.DepartmentDao">
+    <select id="findAllDepart" resultType="Department">
+        select * from department where DelMark=1 and DeptType= 1;
+    </select>
+
+    <select id="findDepartmentconstantitem" resultType="com.gjxsoft.domain.Departmentconstantitem">
+        select d.*,c.ConstantName from department d,constantitem c where DeptCategoryID =c.ID and d.DelMark=1 and c.DelMark =1
+    </select>
+    <update id="updateDepartment" parameterType="com.gjxsoft.domain.Department">
+         update department
+         set  DeptCode = #{deptCode},DeptName =#{deptName} ,DeptCategoryID=#{deptCategoryId},DeptType =#{deptType}
+         where ID =#{id}
+
+    </update>
+
+    <update id="deleteDepart" parameterType="int">
+        update department set DelMark = 2 where ID =#{id}
+    </update>
+
+    <insert id="insertDepart" parameterType="com.gjxsoft.domain.Department">
+        insert into department(id,DeptCode,DeptName,DeptCategoryID,DeptType,DelMark) values (null,#{deptCode},#{deptName},#{deptCategoryId},#{deptType},1)
+    </insert>
+
+
+    <select id="findByIdRrName" parameterType="String" resultType="com.gjxsoft.domain.Departmentconstantitem">
+         select d.*,c.ConstantName from department d,constantitem c where DeptCategoryID =c.ID and d.DelMark=1 and c.DelMark =1 and (d.ID like #{idOrName} or d.DeptName like '%${value}%' )
+    </select>
+</mapper>

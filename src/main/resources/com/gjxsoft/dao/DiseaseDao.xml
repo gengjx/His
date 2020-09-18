@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.gjxsoft.dao.DiseaseDao">
+
+    <select id="findAll" resultType="com.gjxsoft.domain.Disease">
+        select * from disease where DelMark =1
+    </select>
+
+    <update id="updateSettlecategory" parameterType="com.gjxsoft.domain.Disease">
+         update disease
+         set  DiseaseCode = #{diseaseCode},diseaseName =#{diseaseName},diseaseIcd = #{diseaseIcd},diseCategoryId=#{diseCategoryId}
+         where ID =#{id}
+
+    </update>
+    <insert id="insertSettlecategory" parameterType="com.gjxsoft.domain.Disease">
+        insert into disease(DiseaseCode, DiseaseName, DiseaseICD,DiseCategoryID) values (#{diseaseCode},#{diseaseName},#{ diseaseIcd},#{ diseCategoryId})
+    </insert>
+
+    <update id="deleteSettlecategory" parameterType="int">
+         update disease set DelMark = 2 where ID =#{id}
+    </update>
+
+    <select id="findByIdOrName" parameterType="String" resultType="com.gjxsoft.domain.Disease">
+        select * from disease where (ID like #{idOrName} or DiseaseName like '%${value}%') and DelMark =1
+    </select>
+
+</mapper>
